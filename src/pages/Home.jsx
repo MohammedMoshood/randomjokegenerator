@@ -37,7 +37,7 @@ const Home = () => {
           }}
           placeholder="Search Jokes"
         ></Search>
-        <SearchModal>
+        {/* <SearchModal>
           <SingleSearchResult>
             <IdCell>
               <b>ID</b>
@@ -55,7 +55,7 @@ const Home = () => {
               </SingleSearchResult>
             );
           })}
-        </SearchModal>
+        </SearchModal> */}
       </Header>
 
       <Container>
