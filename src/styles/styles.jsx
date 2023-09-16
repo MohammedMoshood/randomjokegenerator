@@ -101,7 +101,6 @@ export const SearchModal = styled.div`
   font-size: 16px;
   display: flex;
   z-index: 1;
-  transition: 0.5s ease-in-out all;
   flex-direction: column;
   transform: ${({ empty }) => (empty ? "scaleX(0)" : "scaleX(1)")};
   opacity: ${({ empty }) => (empty ? "0" : "1")};
