@@ -5,9 +5,16 @@
   font-family: "Work Sans", sans-serif;
 }
 body {
-  background-color: #FAE5FF;
-  max-width: 1240px;
+  background-color: #fae5ff;
+  max-width: 1280px;
+  position: relative;
   width: 100%;
-  height: 100vh;
-  margin: 0 auto;
+  height: 98svh;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media screen and (min-width:1600px) {
+  body{
+    height: 800px;
+  }
 }

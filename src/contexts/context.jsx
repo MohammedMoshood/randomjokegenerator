@@ -7,12 +7,12 @@ const JokeContext = createContext({});
 export const JokeProvider = ({ children }) => {
   const [joke, setJoke] = useState({});
   const [searchResults, setSearchResults] = useState([]);
-
+  const [resultsPage, setResultsPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
-  console.log(searchResults);
 
   const url = "https://icanhazdadjoke.com";
-  const searchUrl = url + "/search";
+  const searchUrl =
+    url + `/search?limit=5&term=${searchTerm}&page=${resultsPage}`;
   const getSearchResults = useCallback(() => {
     fetch(searchUrl, {
       method: "GET",
@@ -27,14 +27,12 @@ export const JokeProvider = ({ children }) => {
         throw response;
       })
       .then((data) => {
-        
-       
         setSearchResults(data);
       })
       .catch((error) => {
         console.error("Error fetching search results data: ", error);
       });
-  },[searchUrl]);
+  }, [searchUrl]);
   const getJoke = () => {
     fetch(url, {
       method: "GET",
@@ -60,10 +58,18 @@ export const JokeProvider = ({ children }) => {
   }, []);
   useEffect(() => {
     getSearchResults();
-  },[getSearchResults]);
+  }, [getSearchResults]);
   return (
     <JokeContext.Provider
-      value={{ joke, getJoke, searchResults, searchTerm, setSearchTerm }}
+      value={{
+        joke,
+        getJoke,
+        searchResults,
+        searchTerm,
+        setSearchTerm,
+        setResultsPage,
+        resultsPage
+      }}
     >
       {children}
     </JokeContext.Provider>

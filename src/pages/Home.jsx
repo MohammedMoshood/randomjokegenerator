@@ -7,6 +7,8 @@ import {
   Joke,
   JokeButton,
   JokeCell,
+  Number,
+  Pagination,
   Search,
   SearchModal,
   SingleSearchResult,
@@ -19,12 +21,32 @@ import {
   FaInstagramSquare,
   FaLinkedin,
 } from "react-icons/fa";
+
 const Home = () => {
-  const { joke, getJoke, searchResults, setSearchTerm } =
-    useContext(JokeContext);
+  const {
+    joke,
+    getJoke,
+    searchResults,
+    setSearchTerm,
+    searchTerm,
+    setResultsPage,
+    resultsPage,
+  } = useContext(JokeContext);
   const jokes = searchResults?.results;
-  console.log(jokes);
+  const totalPages = searchResults?.total_pages;
   const jokeText = joke?.joke;
+  let pageArr = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pageArr.push(
+      <Number
+        page={i === resultsPage}
+        onClick={() => setResultsPage(i)}
+        key={i}
+      >
+        {i}
+      </Number>
+    );
+  }
   return (
     <>
       <Header>
@@ -37,14 +59,25 @@ const Home = () => {
           }}
           placeholder="Search Jokes"
         ></Search>
-        {/* <SearchModal>
-          <SingleSearchResult>
-            <IdCell>
+
+        <SearchModal empty={searchTerm === "" && true}>
+          <SingleSearchResult
+            style={{ background: "white", cursor: "default" }}
+          >
+            <IdCell style={{ width: "31%" }}>
               <b>ID</b>
             </IdCell>
             <JokeCell>
               <b>Joke</b>
             </JokeCell>
+            <button
+              onClick={() => {
+                setSearchTerm("");
+                setResultsPage(1);
+              }}
+            >
+              x
+            </button>
           </SingleSearchResult>
           {jokes?.map((item, i) => {
             const { id, joke } = item;
@@ -55,7 +88,8 @@ const Home = () => {
               </SingleSearchResult>
             );
           })}
-        </SearchModal> */}
+          <Pagination>{pageArr}</Pagination>
+        </SearchModal>
       </Header>
 
       <Container>
